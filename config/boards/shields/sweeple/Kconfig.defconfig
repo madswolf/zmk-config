@@ -1,0 +1,16 @@
+if SHIELD_SWEEPLE_DONGLE
+
+config ZMK_KEYBOARD_NAME
+    default "Sweeple"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+endif
+
+if SHIELD_SWEEPLE_LEFT || SHIELD_SWEEPLE_RIGHT || SHIELD_SWEEPLE_DONGLE
+
+config ZMK_SPLIT
+    default y
+
+endif
