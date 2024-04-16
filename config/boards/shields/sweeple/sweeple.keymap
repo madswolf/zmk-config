@@ -39,8 +39,8 @@
             label = "macro_tilde";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp RA(RBKT) &kp RA(RBKT)>;
-        };
+            bindings = <&kp RA(RBKT) &kp RA(RBKT)>; 
+                    };
         btick: btick {
             label = "macro_btick";
             compatible = "zmk,behavior-macro";
@@ -136,11 +136,11 @@
         default_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-            &trans     &kp W      &kp F      &kp P      &trans         &trans     &kp L      &kp U      &kp Y      &trans
+            &kp Q     &kp W      &kp E      &kp R      &kp T          &kp Y      &kp U      &kp I      &kp O      &kp P
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-            &kp A      &kp R      &kp S      &kp T      &kp G          &kp M      &kp N      &kp E      &kp I      &kp O
+            &kp A      &kp S      &kp D      &kp F      &kp G          &kp H      &kp J      &kp K      &kp L      &kp O
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-            &kp Z      &kp V      &kp C      &kp D      &trans         &trans     &kp H      &kp K      &kp B      &kp J
+            &kp Z      &kp X      &kp C      &kp V      &kp B         &kp N      &kp M      &kp LBKT   &kp RBKT   &kp SEMI
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                            &lt 5 SPACE  &kp ESC        &htl 3 1   &kp BSPC
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
