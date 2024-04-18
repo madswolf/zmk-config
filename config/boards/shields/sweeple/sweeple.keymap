@@ -156,11 +156,11 @@
         symbol_1_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│          │  $       │  @       │  =       │          │   │          │  <       │  ?       │  +       │          │
-            &trans     &kp RA(N4) &kp RA(N2) &kp RPAR   &trans         &trans     &kp NUBS   &kp UNDER  &kp MINUS  &trans
+        //│          │  $       │  @       │  =       │ |        │   │          │  <       │  ?       │  +       │          │
+            &trans     &kp RA(N4) &kp RA(N2) &kp RPAR   &kp RA(EQUAL) &trans     &kp NUBS   &kp UNDER  &kp MINUS  &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  `       │  |       │  "       │  :       │  %       │   │  (       │  -       │  &       │  /       │  *       │
-            &btick &kp RA(EQUAL)  &kp LS(N2) &kp LS(DOT) &kp PRCNT     &kp ASTRK  &kp FSLH   &kp CARET  &kp AMPS   &kp PIPE
+        //│  `       │  '       │  "       │  :       │  %       │   │  (       │  -       │  &       │  /       │  *       │
+            &btick    &kp BSLH  &kp LS(N2) &kp LS(DOT) &kp PRCNT     &kp ASTRK  &kp FSLH   &kp CARET  &kp AMPS   &kp PIPE
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │  #       │  .       │          │   │          │  {       │  [       │  ~       │          │
             &sk LALT   &trans     &kp LS(N3) &kp DOT    &trans         &trans     &kp RA(N7) &kp RA(N8) &tilde     &kp DEL
