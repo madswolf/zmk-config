@@ -84,7 +84,7 @@
         combo_esc {
             timeout-ms = <30>;
             key-positions = <0 1>; 
-            layers = <0>;
+            layers = <0 4>;
             bindings = <&kp ESC>; 
         };
         combo_ao {
@@ -207,13 +207,13 @@
         gaming_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-            &kp TAB   &kp Q      &kp W      &kp E      &trans          &trans   &trans     &trans     &trans     &trans
+            &kp TAB   &kp Q      &kp W      &kp E      &kp M          &trans     &trans     &trans     &trans     &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-            &kp LSHIFT &kp A     &kp S      &kp D      &trans        &trans     &trans     &trans     &trans    &trans
+            &kp LSHIFT &kp A     &kp S      &kp D      &kp F          &trans     &trans     &trans     &trans    &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
             &kp Z      &kp X      &kp C      &kp V      &trans        &trans     &trans     &trans     &trans     &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                           &kp LCTRL     &lt 5 SPACE  &to 0      &trans
+                                            &sl 3      &kp SPACE      &to 0      &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
