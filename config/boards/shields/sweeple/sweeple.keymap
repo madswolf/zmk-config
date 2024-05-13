@@ -142,11 +142,11 @@
         default_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-            &kp Q     &kp W      &kp F      &kp P      &kp G          &kp J      &kp L      &kp U      &kp Y      &kp P
+            &kp Q     &kp W      &kp F      &kp P      &kp B          &kp J      &kp L      &kp U      &kp Y      &mt LSHIFT RET
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-            &kp A     &kp R      &kp S      &kp T      &kp D          &kp H      &kp N      &kp E      &kp I      &mt LSHIFT O
+            &kp A     &kp R      &kp S      &kp T      &kp G          &kp M      &kp N      &kp E      &kp I      &kp O
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-            &kp Z     &kp X      &kp C      &kp V      &kp B          &kp K      &kp M      &kp LALT   &kp RBKT   &bootloader
+            &kp Z     &kp X      &kp C      &kp D      &kp V          &kp K      &kp H      &kp LALT   &kp RBKT   &bootloader
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                            &kp LCTRL     &lt 5 SPACE &kp BSPC   &htl 3 1
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
