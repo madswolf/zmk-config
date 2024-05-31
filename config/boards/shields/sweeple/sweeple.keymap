@@ -231,7 +231,7 @@
             &kp LSHIFT &mkp LCLK  &mkp MCLK  &mkp RCLK  &trans         &trans  &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT  &trans     
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │          │   │          │          │          │          │          │
-            &trans     &LC(PG_UP) &kp LALT   &LC(PG_UP) &trans         &trans     &trans     &trans     &trans     &trans
+            &trans  &kp LC(PG_UP) &kp LALT &kp LC(PG_UP) &trans         &trans     &trans     &trans     &trans     &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &kp LCTRL
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
