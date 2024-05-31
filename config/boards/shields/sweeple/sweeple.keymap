@@ -4,15 +4,15 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/mouse.h>
 
-#define U_MOUSE_MOVE_MAX 1400
+#define U_MOUSE_MOVE_MAX 2500
 
 / {
     input_configs {
         compatible = "zmk,input-configs";
         mmv {
             device = <&mmv>;
-            scale-multiplier = <10>;
-            time-to-max-speed-ms = <0>;
+            scale-multiplier = <100>;
+            time-to-max-speed-ms = <1>;
         };
     };
 
@@ -231,7 +231,7 @@
             &kp LSHIFT &mkp LCLK  &mkp MCLK  &mkp RCLK  &trans         &trans  &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT  &trans     
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │          │   │          │          │          │          │          │
-            &trans  &kp LC(PG_UP) &kp LALT &kp LC(PG_UP) &trans         &trans     &trans     &trans     &trans     &trans
+            &trans  &kp LC(PG_UP) &kp LALT &kp LC(PG_DN) &trans         &trans     &trans     &trans     &trans     &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &kp LCTRL
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
