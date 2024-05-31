@@ -12,7 +12,7 @@
         mmv {
             device = <&mmv>;
             scale-multiplier = <10>;
-            time-to-max-speed-ms = <0>
+            time-to-max-speed-ms = <0>;
         };
     };
 
