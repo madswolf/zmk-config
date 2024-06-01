@@ -6,6 +6,10 @@
 
 #define U_MOUSE_MOVE_MAX 2500
 
+#define KEYS_L 0 1 2 3 4 5 12 13 14 15 16 23 24 25 26 27 28
+#define KEYS_R 6 7 8 9 10 11 17 18 19 20 21 22 29 30 31 32 33 34 35
+#define KEYS_T 36 37 38 39 40 41
+
 / {
     input_configs {
         compatible = "zmk,input-configs";
@@ -17,6 +21,26 @@
     };
 
     behaviors {
+        lpht: left_positional_hold_tap {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <300>;
+            quick-tap-ms = <0>;
+            bindings = <&kp>, <&kp>;
+            hold-trigger-key-positions = <KEYS_R KEYS_T>;
+            hold-trigger-on-release;
+        };
+        rpht: right_positional_hold_tap {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <300>;
+            quick-tap-ms = <0>;
+            bindings = <&kp>, <&kp>;
+            hold-trigger-key-positions = <KEYS_L KEYS_T>;
+            hold-trigger-on-release;
+        };
         htl: hold_tap_leader {
             label = "leader_hold_tap";
             compatible = "zmk,behavior-hold-tap";
@@ -145,11 +169,11 @@
         default_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-            &kp Q     &kp W      &kp F      &kp P      &kp B          &kp J      &kp L      &kp U      &kp Y      &mt LSHIFT RET
+            &kp Q     &kp W       &kp F      &kp P      &kp B          &kp J      &kp L      &kp U      &kp Y      &mt LSHIFT RET
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-            &kp A     &kp R      &kp S      &kp T      &kp G          &kp M      &kp N      &kp E      &kp I      &kp O
+        &lpht LWIN A &lpht LALT R &lpht LSHIFT S &lpht LCTRL T &kp G   &kp M      &rpht RCTRL N &rpht RSHIFT E &rpht LALT I &rpht RWIN O
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-            &kp Z     &kp X      &kp C      &kp D      &kp V          &kp K      &kp H      &kp LALT   &kp RBKT   &bootloader
+            &kp Z     &kp X       &kp C      &kp D      &kp V          &kp K      &kp H      &kp LALT   &kp RBKT   &bootloader
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                            &kp LCTRL     &lt 5 SPACE &kp BSPC   &htl 3 1
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
@@ -177,13 +201,13 @@
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│          │          │          │          │          │   │          │  >       │  !       │          │          │
-            &trans     &trans     &trans     &trans     &trans         &trans   &kp LS(NUBS) &kp EXCL   &trans     &trans
+            &trans     &trans     &trans     &trans     &trans         &trans   &kp LS(NUBS) &kp EXCL   &trans      &kp LC(PSCRN)
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  ´       │          │  '       │  ;       │          │   │  )       │  _       │          │ \        │          │
-            &kp EQUAL  &trans     &kp BSLH   &kp LS(COMMA) &trans      &kp LPAR &kp LS(FSLH) &copy     &kp RA(NUBS) &trans
+            &kp EQUAL  &trans     &kp BSLH   &kp LS(COMMA) &trans      &kp LPAR &kp LS(FSLH) &copy     &kp RA(NUBS) &kp LS(PSCRN)
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │  ,       │          │   │          │  }       │  ]       │  ^       │          │
-            &to 4      &kp Z      &trans     &kp COMMA  &trans         &trans     &kp RA(N0) &kp RA(N9) &hat       &trans
+            &to 4      &kp Z      &trans     &kp COMMA  &trans         &trans     &kp RA(N0) &kp RA(N9) &hat        &kp LC(LS(PSCRN))
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
