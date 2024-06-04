@@ -50,6 +50,15 @@
             bindings = <&mo>, <&sl>; 
         };
 
+        htlk: hold_tap_leader_kp {
+            label = "leader_hold_tap_kp";
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>; 
+            flavor = "tap-preferred"; 
+            tapping-term-ms = <200>; 
+            bindings = <&sl>, <&kp>; 
+        };
+
         skq: sticky_key_quick_release {
             compatible = "zmk,behavior-sticky-key";
             label = "STICKY_KEY_QUICK_RELEASE";
@@ -163,7 +172,7 @@
             bindings = <&kp LC(C)>; 
         };
     };
-
+    
     keymap {
         compatible = "zmk,keymap";
         default_layer {
@@ -175,7 +184,7 @@
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
             &kp Z     &kp X       &kp C      &kp D      &kp V          &kp K      &kp H      &kp LALT   &kp RBKT   &bootloader
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                           &kp LCTRL     &lt 5 SPACE &kp BSPC   &htl 3 1
+                                           &kp LCTRL     &htlk 5 SPACE &kp BSPC   &htl 3 1
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
