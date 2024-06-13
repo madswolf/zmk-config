@@ -25,7 +25,7 @@
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "balanced";
-            tapping-term-ms = <200>;
+            tapping-term-ms = <150>;
             quick-tap-ms = <0>;
             bindings = <&kp>, <&kp>;
             hold-trigger-key-positions = <KEYS_R KEYS_T>;
@@ -35,7 +35,7 @@
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "balanced";
-            tapping-term-ms = <200>;
+            tapping-term-ms = <150>;
             quick-tap-ms = <0>;
             bindings = <&kp>, <&kp>;
             hold-trigger-key-positions = <KEYS_L KEYS_T>;
@@ -149,7 +149,7 @@
         };
         combo_tab {
             timeout-ms = <30>;
-            key-positions = <10 11>; 
+            key-positions = <12 13>; 
             layers = <0>;
             bindings = <&kp TAB>; 
         };
@@ -178,13 +178,13 @@
         default_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-            &kp Q     &kp W       &kp F      &kp P      &kp B          &kp J      &kp L      &kp U      &kp Y      &mt LSHIFT RET
+            &kp Q     &kp W       &kp F      &kp P      &kp B          &kp J      &kp L      &kp U      &kp Y      &kp RET
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         &lpht LWIN A &lpht LALT R &lpht LSHIFT S &lpht LCTRL T &kp G   &kp M      &rpht RCTRL N &rpht RSHIFT E &rpht LALT I &rpht RWIN O
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-            &kp Z     &kp X       &kp C      &kp D      &kp V          &kp K      &kp H      &kp LALT   &kp RBKT   &bootloader
+            &kp Z     &kp X       &kp C      &kp D      &kp V          &kp K      &kp H      &trans     &kp RBKT   &bootloader
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                           &kp LCTRL     &htlk 5 SPACE &kp BSPC   &htl 3 1
+                                           &lt 6 ESC    &htlk 5 SPACE  &kp BSPC   &htl 3 1
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
@@ -267,6 +267,23 @@
             &trans  &kp LC(PG_UP) &kp LALT &kp LC(PG_DN) &trans         &trans     &trans     &trans     &trans     &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &kp LCTRL
+        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
+            >;
+        };
+
+        shortcut_layer {
+            bindings = <
+        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
+        //│          │          │          │          │          │   │          │          │          │          │          │
+            &trans     &trans     &trans     &trans     &trans         &trans     &kp LC(N1) &kp LC(N2) &kp LC(N3) &trans
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│          │          │          │          │          │   │          │          │          │          │          │
+            &trans     &trans     &kp TAB    &kp ENTER  &trans    &kp LS(LC(W)) &kp LS(LC(TAB)) &kp LC(W) &kp LC(TAB) &trans
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│          │          │          │          │          │   │          │          │          │          │          │
+            &trans     &kp LC(Z)  &copy      &paste     &trans         &trans     &trans     &trans  &kp LS(LC(I)) &trans
+        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
+                                             &trans     &trans         &trans     &kp DEL
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
