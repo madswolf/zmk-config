@@ -281,7 +281,7 @@
             &trans    &kp LC(DOT) &kp F2     &kp F12    &trans    &kp LS(LC(W)) &kp LS(LC(TAB)) &kp LC(W) &kp LC(TAB) &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │          │   │          │          │          │          │          │
-            &trans     &kp LC(Z)  &copy      &paste     &trans         &trans     &trans     &trans  &kp LS(LC(I)) &trans
+            &trans     &kp LC(Z)  &copy     &kp LS(F12) &trans         &trans     &trans     &trans  &kp LS(LC(I)) &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &kp DEL
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
