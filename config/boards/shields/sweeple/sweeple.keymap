@@ -182,7 +182,7 @@
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         &lpht LWIN A &lpht LALT R &lpht LSHIFT S &lpht LCTRL T &kp G   &kp M      &rpht RCTRL N &rpht RSHIFT E &rpht LALT I &rpht RWIN O
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-            &kp Z     &kp X       &kp C      &kp D      &kp V          &kp K      &kp H      &trans     &kp RBKT   &bootloader
+            &kp Z     &kp X       &kp C      &kp D      &kp V          &kp K      &kp H      &kp DOT    &kp LS(COMMA) &kp DEL
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                            &lt 6 ESC    &htlk 5 SPACE  &kp BSPC   &htl 3 1
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
@@ -205,7 +205,7 @@
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >; 
         };
-
+ 
         symbol_2_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
@@ -226,8 +226,8 @@
         number_navigation_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│          │  1       │  2       │  3       │          │   │          │ PAGE DN  │ UP       │ PAGE UP  │          │ 
-            &trans     &kp N1     &kp N2     &kp N3     &trans         &trans     &kp PG_DN  &kp UARW   &kp PG_UP  &trans
+        //│          │  1       │  2       │  3       │          │   │+selection│ PAGE DN  │ UP       │ PAGE UP  │-selection│ 
+            &trans     &kp N1     &kp N2     &kp N3     &trans    &kp LS(LA(RARW)) &kp PG_DN  &kp UARW   &kp PG_UP  &kp LS(LA(LARW))
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │  4       │  5       │  6       │  0       │   │ HOME     │ LEFT     │ DOWN     │ RIGHT    │END       │
          &kp LS(LALT)  &kp N4     &kp N5     &kp N6     &kp N0         &kp HOME    &kp LARW   &kp DARW   &kp RARW   &kp END
