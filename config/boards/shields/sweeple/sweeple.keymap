@@ -277,8 +277,8 @@
         //│          │ Continue │ Step over│ Step into│          │   │          │          │          │          │          │
             &trans     &kp F5     &kp F10    &kp F11    &trans         &trans     &kp LC(N1) &kp LC(N2) &kp LC(N3) &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│          │Fix       │ Rename   │ Goto def │ annotate │   │          │          │          │          │          │
-            &trans    &kp LC(DOT) &kp F2     &kp F12  &kp LA(LC(LARW)) &kp LS(LC(W)) &kp LS(LC(TAB)) &kp LC(W) &kp LC(TAB) &trans
+        //│breakpoint│Fix       │ Rename   │ Goto def │ annotate │   │          │          │          │          │          │
+            &kp F9    &kp LC(DOT) &kp F2     &kp F12  &kp LA(LC(LARW)) &kp LS(LC(W)) &kp LS(LC(TAB)) &kp LC(W) &kp LC(TAB) &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │References│          │   │          │          │          │          │          │
             &trans     &kp LC(Z)  &copy    &kp LA(LS(F12)) &trans      &trans     &trans     &trans  &kp LS(LC(I)) &trans
