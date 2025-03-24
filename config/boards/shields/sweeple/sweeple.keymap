@@ -226,14 +226,14 @@
         number_navigation_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│          │  1       │  2       │  3       │          │   │+selection│ PAGE DN  │ UP       │ PAGE UP  │-selection│ 
-            &trans     &kp N1     &kp N2     &kp N3     &trans    &kp LS(LA(RARW)) &kp PG_DN  &kp UARW   &kp PG_UP  &kp LS(LA(LARW))
+        //│          │  1       │  2       │  3       │          │   │ VOL DOWN │ PAGE DN  │ UP       │ PAGE UP  │ VOL UP   │ 
+            &trans     &kp N1     &kp N2     &kp N3     &trans        &kp C_VOL_DN &kp PG_DN  &kp UARW   &kp PG_UP  &kp C_VOL_UP
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │  4       │  5       │  6       │  0       │   │ HOME     │ LEFT     │ DOWN     │ RIGHT    │END       │
          &kp LS(LALT)  &kp N4     &kp N5     &kp N6     &kp N0         &kp HOME    &kp LARW   &kp DARW   &kp RARW   &kp END
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│          │  7       │  8       │  9       │          │   │          │ VOl DOWN │ VOL UP   │PLAY PAUSE│          │
-            &trans     &kp N7     &kp N8     &kp N9     &trans         &trans  &kp C_VOL_DN &kp C_VOL_UP &kp C_PP  &trans
+        //│          │  7       │  8       │  9       │          │   │          │+selection│PLAY PAUSE│-selection│          │
+            &trans     &kp N7     &kp N8     &kp N9     &trans     &trans  &kp LS(LA(RARW)) &kp C_PP &kp LS(LA(LARW)) &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &kp LS(LALT)   &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
