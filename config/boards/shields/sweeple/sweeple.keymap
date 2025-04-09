@@ -25,7 +25,7 @@
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "balanced";
-            tapping-term-ms = <200>;
+            tapping-term-ms = <220>;
             quick-tap-ms = <0>;
             require-prior-idle-ms = <150>;
             bindings = <&kp>, <&kp>;
@@ -36,7 +36,7 @@
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "balanced";
-            tapping-term-ms = <200>;
+            tapping-term-ms = <220>;
             quick-tap-ms = <0>;
             require-prior-idle-ms = <150>;
             bindings = <&kp>, <&kp>;
@@ -60,49 +60,6 @@
             tapping-term-ms = <200>; 
             bindings = <&sl>, <&kp>; 
         };
-
-        skq: sticky_key_quick_release {
-            compatible = "zmk,behavior-sticky-key";
-            label = "STICKY_KEY_QUICK_RELEASE";
-            #binding-cells = <1>;
-            bindings = <&kp>;
-            release-after-ms = <1000>;
-            quick-release;
-            ignore-modifiers;
-        };
-    };
-
-    macros {
-        tilde: tilde {
-            label = "macro_tilde";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp RA(RBKT) &kp RA(RBKT)>; 
-                    };
-        btick: btick {
-            label = "macro_btick";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp PLUS &kp PLUS>;
-        };
-        hat: hat {
-            label = "macro_hat";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp RBRC &kp RBRC>;
-        };
-        copy: copy {
-            label = "macro_copy";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LC(C)>;
-        };
-        paste: paste {
-            label = "macro_paste";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LC(V)>;
-        };
     };
 
     combos {
@@ -119,30 +76,20 @@
             layers = <0>;
             bindings = <&kp SEMI>; 
         };
+         combo_ao {
+            timeout-ms = <30>;
+            key-positions = <27 28>; 
+            layers = <0>;
+            bindings = <&kp SQT>; 
+        };
+
         combo_esc {
             timeout-ms = <30>;
             key-positions = <0 1>; 
             layers = <0 4>;
             bindings = <&kp ESC>; 
         };
-        combo_ao {
-            timeout-ms = <30>;
-            key-positions = <27 28>; 
-            layers = <0>;
-            bindings = <&kp SQT>; 
-        };
-        combo_x {
-            timeout-ms = <30>;
-            key-positions = <11 12>; 
-            layers = <0>;
-            bindings = <&kp X>; 
-        };
-        combo_q {
-            timeout-ms = <30>;
-            key-positions = <21 22>; 
-            layers = <0>;
-            bindings = <&kp Q>; 
-        };
+        
         combo_enter {
             timeout-ms = <30>;
             key-positions = <16 17>; 
@@ -155,12 +102,7 @@
             layers = <0>;
             bindings = <&kp TAB>; 
         };
-        combo_delete {
-            timeout-ms = <30>;
-            key-positions = <26 27>; 
-            layers = <0>;
-            bindings = <&kp DEL>; 
-        };
+        
         combo_paste {
             timeout-ms = <30>;
             key-positions = <2 3>; 
@@ -198,12 +140,12 @@
             &trans     &kp RA(N4) &kp RA(N2) &kp RPAR   &kp RA(EQUAL) &trans     &kp NUBS   &kp UNDER  &kp MINUS  &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  `       │  '       │  "       │  :       │  %       │   │  (       │  -       │  &       │  /       │  *       │
-            &btick    &kp BSLH  &kp LS(N2) &kp LS(DOT) &kp PRCNT     &kp ASTRK  &kp FSLH   &kp CARET  &kp AMPS   &kp PIPE
+            &kp PLUS   &kp BSLH  &kp LS(N2) &kp LS(DOT) &kp PRCNT     &kp ASTRK  &kp FSLH   &kp CARET  &kp AMPS   &kp PIPE
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │  #       │  .       │          │   │          │  {       │  [       │  ~       │          │
-            &sk LALT   &trans     &kp LS(N3) &kp DOT    &trans         &trans     &kp RA(N7) &kp RA(N8) &tilde     &kp DEL
+            &sk LALT   &trans     &kp LS(N3) &kp DOT    &trans         &trans     &kp RA(N7) &kp RA(N8) &kp RA(RBKT) &kp DEL
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                            &skq LSHIFT &skq LGUI      &sl 2      &sl 2
+                                            &trans      &trans         &sl 2      &sl 2
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >; 
         };
@@ -215,10 +157,10 @@
             &trans     &trans     &trans     &trans     &trans         &trans   &kp LS(NUBS) &kp EXCL   &trans      &kp LC(PSCRN)
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  ´       │          │  '       │  ;       │          │   │  )       │  _       │          │ \        │          │
-            &kp EQUAL  &trans     &kp BSLH   &kp LS(COMMA) &trans      &kp LPAR &kp LS(FSLH) &copy     &kp RA(NUBS) &kp LS(PSCRN)
+            &kp EQUAL  &trans     &kp BSLH   &kp LS(COMMA) &trans      &kp LPAR &kp LS(FSLH) &trans     &kp RA(NUBS) &kp LS(PSCRN)
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │  ,       │          │   │          │  }       │  ]       │  ^       │          │
-            &to 4      &kp Z      &trans     &kp COMMA  &trans         &trans     &kp RA(N0) &kp RA(N9) &hat        &kp LC(LS(PSCRN))
+            &to 4      &kp Z      &trans     &kp COMMA  &trans         &trans     &kp RA(N0) &kp RA(N9) &kp RBRC    &kp LC(LS(PSCRN))
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
@@ -283,7 +225,7 @@
             &kp F9    &kp LC(DOT) &kp F2     &kp F12  &kp LA(LC(LARW)) &kp LS(LC(W)) &kp LS(LC(TAB)) &kp LC(W) &kp LC(TAB) &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │References│          │   │          │          │          │          │          │
-            &trans     &kp LC(Z)  &copy    &kp LA(LS(F12)) &trans      &trans     &trans     &trans  &kp LS(LC(I)) &trans
+            &trans     &kp LC(Z)  &trans     &kp LA(LS(F12)) &trans    &trans     &trans     &trans  &kp LS(LC(I)) &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &kp DEL
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
