@@ -4,4 +4,5 @@ This is my configuration with 3 Nice!Nanos: One connected through usb working as
 
 Using a colemak-dh with danish letters layout.
 
-Using the mouse key pull request branch.
+Layout:
+![Image of the layout of my keyboard](./keymap.svg "Layout")
