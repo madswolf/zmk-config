@@ -134,7 +134,7 @@
             &kp PLUS   &kp BSLH  &kp LS(N2) &kp LS(DOT) &kp PRCNT     &kp ASTRK  &kp FSLH   &kp CARET  &kp AMPS   &kp PIPE
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │  #       │  .       │          │   │          │  {       │  [       │  ~       │          │
-            &sk LALT   &trans     &kp LS(N3) &kp DOT    &trans         &trans     &kp RA(N7) &kp RA(N8) &kp RA(RBKT) &kp DEL
+            &trans     &trans     &kp LS(N3) &kp DOT    &trans         &trans     &kp RA(N7) &kp RA(N8) &kp RA(RBKT) &kp DEL
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                             &trans      &trans         &sl 2      &sl 2
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
@@ -145,10 +145,10 @@
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│          │          │          │          │          │   │          │  >       │  !       │          │          │
-            &trans     &trans     &trans     &trans     &trans         &trans   &kp LS(NUBS) &kp EXCL   &trans      &kp LC(PSCRN)
+            &trans     &kp LC(LA(E)) &trans  &trans     &trans         &trans   &kp LS(NUBS) &kp EXCL   &trans      &kp LC(PSCRN)
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  ´       │          │  '       │  ;       │          │   │  )       │  _       │          │ \        │          │
-            &kp EQUAL  &trans     &kp BSLH   &kp LS(COMMA) &trans      &kp LPAR &kp LS(FSLH) &trans     &kp RA(NUBS) &kp LS(PSCRN)
+        //│  ´       │          │  '       │  ;       │          │   │  )       │  _       │  |       │ \        │          │
+            &kp EQUAL  &trans     &kp BSLH   &kp LS(COMMA) &trans      &kp LPAR &kp LS(FSLH) &kp RA(EQUAL)  &kp RA(NUBS) &kp LS(PSCRN)
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │  ,       │          │   │          │  }       │  ]       │  ^       │          │
             &to 4      &kp Z      &trans     &kp COMMA  &trans         &trans     &kp RA(N0) &kp RA(N9) &kp RBRC    &kp LC(LS(PSCRN))
