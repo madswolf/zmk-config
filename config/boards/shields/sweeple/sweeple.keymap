@@ -12,13 +12,32 @@
 
 / {
     behaviors {
+        morph_curlybracket: morph_curlybracket {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp RA(N7)>, <&kp RA(N0)>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+        morph_parenthesis: morph_parenthesis {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp ASTRK>, <&kp LPAR>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+        morph_bracket: morph_bracket {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp RA(N8)>, <&kp RA(N9)>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
         lpht: left_positional_hold_tap {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "balanced";
             tapping-term-ms = <220>;
-            quick-tap-ms = <0>;
-            require-prior-idle-ms = <200>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
             bindings = <&kp>, <&kp>;
             hold-trigger-key-positions = <KEYS_R KEYS_T>;
             hold-trigger-on-release;
@@ -28,8 +47,8 @@
             #binding-cells = <2>;
             flavor = "balanced";
             tapping-term-ms = <220>;
-            quick-tap-ms = <0>;
-            require-prior-idle-ms = <200>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
             bindings = <&kp>, <&kp>;
             hold-trigger-key-positions = <KEYS_L KEYS_T>;
             hold-trigger-on-release;
@@ -39,7 +58,7 @@
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>; 
             flavor = "tap-preferred"; 
-            tapping-term-ms = <200>; 
+            tapping-term-ms = <150>; 
             bindings = <&mo>, <&sl>; 
         };
 
@@ -74,6 +93,25 @@
             bindings = <&kp SQT>; 
         };
 
+        combo_morph_curlybracket {
+            timeout-ms = <30>;
+            key-positions = <6 7>; 
+            layers = <0 4>;
+            bindings = <&morph_curlybracket>; 
+        };
+        combo_parenthesis {
+            timeout-ms = <30>;
+            key-positions = <16 17>; 
+            layers = <0 4>;
+            bindings = <&morph_parenthesis>; 
+        };
+        combo_bracket {
+            timeout-ms = <30>;
+            key-positions = <26 27>; 
+            layers = <0 4>;
+            bindings = <&morph_bracket>; 
+        };
+
         combo_esc {
             timeout-ms = <30>;
             key-positions = <0 1>; 
@@ -81,12 +119,6 @@
             bindings = <&kp ESC>; 
         };
         
-        combo_enter {
-            timeout-ms = <30>;
-            key-positions = <16 17>; 
-            layers = <0>;
-            bindings = <&kp ENTER>; 
-        };
         combo_tab {
             timeout-ms = <30>;
             key-positions = <12 13>; 
