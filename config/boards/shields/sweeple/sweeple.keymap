@@ -164,25 +164,25 @@
 
         combo_and_or {
             timeout-ms = <30>;
-            key-positions = <1 2>; 
+            key-positions = <2 3>; 
             layers = <0 4>;
             bindings = <&morph_and_or>; 
         };
         combo_dot {
             timeout-ms = <30>;
-            key-positions = <11 12>; 
+            key-positions = <12 13>; 
             layers = <0 4>;
             bindings = <&morph_dot>; 
         };
         combo_comma {
             timeout-ms = <30>;
-            key-positions = <11 2>; 
+            key-positions = <2 13>; 
             layers = <0 4>;
             bindings = <&morph_comma>; 
         };
         combo_qmark_emark {
             timeout-ms = <30>;
-            key-positions = <21 22>; 
+            key-positions = <22 23>; 
             layers = <0 4>;
             bindings = <&morph_qmark_emark>; 
         };
@@ -195,22 +195,15 @@
             bindings = <&kp ESC>; 
         };
         
-        combo_tab {
-            timeout-ms = <30>;
-            key-positions = <12 13>; 
-            layers = <0>;
-            bindings = <&kp TAB>; 
-        };
-        
         combo_paste {
             timeout-ms = <30>;
-            key-positions = <2 3>; 
+            key-positions = <1 2>; 
             layers = <0>;
             bindings = <&kp LC(V)>; 
         };
         combo_copy {
             timeout-ms = <30>;
-            key-positions = <22 23>; 
+            key-positions = <21 22>; 
             layers = <0>;
             bindings = <&kp LC(C)>; 
         };
@@ -227,7 +220,7 @@
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
             &kp Z     &kp X       &kp C      &kp D      &kp V          &kp K      &kp H      &kp DOT    &kp LS(COMMA) &kp DEL
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                           &lt 6 ESC    &htlk 5 SPACE  &kp BSPC   &htl 3 1
+                                           &lt 6 TAB    &htlk 5 SPACE  &kp BSPC   &htl 3 1
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
@@ -236,13 +229,13 @@
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│          │  $       │  @       │  =       │ |        │   │          │  <       │  ?       │  +       │          │
-            &trans     &kp RA(N4) &kp RA(N2) &kp RPAR   &kp RA(EQUAL) &trans     &kp NUBS   &kp UNDER  &kp MINUS  &trans
+            &trans     &kp RA(N4) &kp RA(N2) &kp RPAR   &trans        &trans     &trans     &trans     &kp MINUS  &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  `       │  '       │  "       │  :       │  %       │   │  (       │  -       │  &       │  /       │  *       │
-            &kp PLUS   &kp BSLH  &kp LS(N2) &kp LS(DOT) &kp PRCNT     &kp ASTRK  &kp FSLH   &kp CARET  &kp AMPS   &kp PIPE
+            &kp PLUS   &kp BSLH  &kp LS(N2) &trans     &kp PRCNT      &trans     &trans     &trans     &kp AMPS   &kp PIPE
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │  #       │  .       │          │   │          │  {       │  [       │  ~       │          │
-            &trans     &trans     &kp LS(N3) &kp DOT    &trans         &trans     &kp RA(N7) &kp RA(N8) &kp RA(RBKT) &kp DEL
+            &trans     &trans     &kp LS(N3) &trans    &trans         &trans     &trans     &trans     &kp RA(RBKT) &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                             &trans      &trans         &sl 2      &sl 2
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
@@ -252,14 +245,14 @@
         symbol_2_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│          │          │          │          │          │   │          │  >       │  !       │          │          │
-            &trans     &kp LC(LA(E)) &trans  &trans     &trans         &trans   &kp LS(NUBS) &kp EXCL   &trans      &kp LC(PSCRN)
+        //│          │  €       │          │          │          │   │          │  >       │  !       │          │          │
+            &trans     &kp LC(LA(E)) &trans  &trans    &trans         &trans     &trans      &trans     &trans      &kp LC(PSCRN)
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  ´       │          │  '       │  ;       │          │   │  )       │  _       │  |       │ \        │          │
-            &kp EQUAL  &trans     &kp BSLH   &kp LS(COMMA) &trans      &kp LPAR &kp LS(FSLH) &kp RA(EQUAL)  &kp RA(NUBS) &kp LS(PSCRN)
+            &kp EQUAL  &trans     &kp BSLH   &trans    &trans         &trans     &trans     &trans     &kp RA(NUBS) &kp LS(PSCRN)
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │  ,       │          │   │          │  }       │  ]       │  ^       │          │
-            &to 4      &kp Z      &trans     &kp COMMA  &trans         &trans     &kp RA(N0) &kp RA(N9) &kp RBRC    &kp LC(LS(PSCRN))
+            &to 4      &kp Z      &trans     &kp COMMA  &trans         &trans    &trans    &trans    &kp RBRC    &kp LC(LS(PSCRN))
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
