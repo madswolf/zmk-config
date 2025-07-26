@@ -5,6 +5,8 @@
 #include <dt-bindings/zmk/pointing.h>
 #include "sweeple_trackpoint.dtsi"
 
+#define MOUSE_TP 7
+
 #define U_TOG_TP_SET &tog MOUSE_TP_S
 
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 1500  // default: 600
