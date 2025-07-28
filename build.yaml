@@ -11,3 +11,5 @@ include:
   - board: nice_nano_v2
     shield: sweeple_trackpoint
     snippet: zmk-usb-logging
+  - board: nice_nano_v2
+    shield: settings_reset
