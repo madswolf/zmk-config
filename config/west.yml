@@ -8,7 +8,7 @@ manifest:
       url-base: https://github.com/badjeff
   projects:
     - name: zmk
-      remote: zmkfirmware
+      remote: badjeff
       revision: main
       import: app/west.yml
     - name: kb_zmk_ps2_mouse_trackpoint_driver
