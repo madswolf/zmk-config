@@ -1,0 +1,8 @@
+# Copyright (c) 2020 Pete Johanson
+# SPDX-License-Identifier: MIT
+
+config SHIELD_YK_DO52PRO_LEFT
+    def_bool $(shields_list_contains,yk_do52pro_left)
+
+config SHIELD_YK_DO52PRO_RIGHT
+    def_bool $(shields_list_contains,yk_do52pro_right)
