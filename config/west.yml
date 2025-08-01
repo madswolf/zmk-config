@@ -2,13 +2,13 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: infused-kim
-      url-base: https://github.com/infused-kim
+    # Additional modules containing boards/shields/custom code can be listed here as well
+    # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
     - name: badjeff
       url-base: https://github.com/badjeff
   projects:
     - name: zmk
-      remote: badjeff
+      remote: zmkfirmware
       revision: main
       import: app/west.yml
     - name: kb_zmk_ps2_mouse_trackpoint_driver
