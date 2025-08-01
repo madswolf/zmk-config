@@ -1,5 +1,8 @@
 #include "sweeple_trackpoint.dtsi"
+#include "split_inputs.dtsi"
 
 &default_transform {
     col-offset = <17>;
 };
+
+&trackpoint_split { device = <&mouse_ps2>; };

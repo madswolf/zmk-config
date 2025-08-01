@@ -5,3 +5,8 @@
  */
 
 #include "sweeple.dtsi"
+#include "split_inputs.dtsi"
+
+&trackpoint_listener {
+    status = "okay";
+};
