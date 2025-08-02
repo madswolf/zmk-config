@@ -27,7 +27,7 @@ manifest:
     # infused-kim's zmk fork with mouse PR, which might be a bit outdated, but
     # is known to be compatible with the PS/2 mouse & TP driver module.
     - name: zmk
-      remote: badjeff
+      remote: zmkfirmware
       revision: main
       import: app/west.yml
 

@@ -1,56 +1,125 @@
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 #include <dt-bindings/zmk/matrix_transform.h>
 
 / {
-
     chosen {
         zmk,kscan = &kscan0;
-        zmk,matrix_transform = &default_transform;
+        zmk,matrix-transform = &default_transform;
     };
 
     default_transform: keymap_transform_0 {
         compatible = "zmk,matrix-transform";
-        columns = <31>;
-        rows = <1>;
+        columns = <10>;
+        rows = <4>;
         map = <
-        RC(0,0)  RC(0,1)  RC(0,2)  RC(0,3)  RC(0,4)    RC(0,21) RC(0,20) RC(0,19) RC(0,18) RC(0,17)
-        RC(0,5)  RC(0,6)  RC(0,7)  RC(0,8)   RC(0,26) RC(0,25) RC(0,24) RC(0,23) RC(0,22)
-        RC(0,11) RC(0,12) RC(0,13) RC(0,14)   RC(0,31) RC(0,30) RC(0,29) RC(0,28) RC(0,27)
-                                   RC(0,15)    RC(0,33) RC(0,32)
+RC(0,2) RC(0,3) RC(0,4) RC(0,5)  RC(0,6) RC(0,7) RC(0,8) RC(0,9)
+RC(1,2) RC(1,3) RC(1,4) RC(1,5)  RC(1,6) RC(1,7) RC(1,8) RC(1,9)
+RC(2,2) RC(2,3) RC(2,4) RC(2,5)  RC(2,6) RC(2,7) RC(2,8) RC(2,9)
+                RC(3,4) RC(3,5)  RC(3,6) RC(3,7)
         >;
     };
 
     kscan0: kscan {
-        compatible = "zmk,kscan-gpio-direct";
-        input-gpios
-        = <&pro_micro  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro 18 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro 19 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro 20 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro 21 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro  1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro  6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro  8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        ;
+        compatible = "zmk,kscan-gpio-matrix";
+        wakeup-source;
+
+        diode-direction = "col2row";
+        row-gpios
+            = <&pro_micro 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&pro_micro 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&pro_micro 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&pro_micro 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            ;
+
     };
+
+    // TODO: per-key RGB node(s)?
 };
+
+/*
+ * PS/2 Mouse / Trackpoint - User Configuration
+ *
+ * Enable PS/2 drivers on this side of the keyboard.
+ * It MUST be the central half. If you connected your TP or mouse to the
+ * left side, then move the following content to `your_keyboard_left.overlay`
+ *
+ * You also need to adjust `Kconfig.defconfig` and configure that this side
+ * is the central side.
+ *
+ */
+
+#define MOUSE_PS2_DRIVER_UART
 
 #define MOUSE_PS2_PIN_SCL_PRO_MICRO <&pro_micro 16 GPIO_ACTIVE_HIGH>
 #define MOUSE_PS2_PIN_SDA_PRO_MICRO <&pro_micro 10 GPIO_ACTIVE_HIGH>
 #define MOUSE_PS2_PIN_RST_PRO_MICRO <&pro_micro 9 GPIO_ACTIVE_HIGH>
 #define MOUSE_PS2_PIN_SDA_PINCTRL <NRF_PSEL(UART_RX, 0, 9)>
-
 #define MOUSE_PS2_UART_BAUD_RATE <14400>
 
+/*
+ * PS/2 Mouse / Trackpoint - User Configuration if NOT using nice!nano
+ *
+ * WARNING: Do NOT change this if you are using a nice!nano v2 or clone.
+ */
+
+// Unexposed UART pins
+// In UART two different pins are used for receiving and transmitting, but PS/2
+// uses the same pin for both.
+//
+// The UART config still requires both pins to be configured. So we use one of
+// the nrf52 pins that are not exposed on the nice!nano board.
+//
 // Do NOT change these if you are using a nice!nano (or a clone of it)
 #define MOUSE_PS2_PIN_UNEXPOSED_TX <NRF_PSEL(UART_TX, 0, 27)>
 #define MOUSE_PS2_PIN_UNEXPOSED_RX <NRF_PSEL(UART_RX, 0, 28)>
 
+
+// Adjust GPIO interrupt priority to the highest level.
+//
+// IMPORTANT TLDR:
+// If you are using the nice_nano_v2 board, you don't need to make changes to
+// the config below and can leave it as it is.
+//
+// Explanation of these settings:
+//
+// PS/2 events must be processed within 30-50us, but frequently bluetooth and
+// other interrupts take longer to finish.
+//
+// Therefore we change the default GPIO priority to the highest level (0) and
+// demote all BT interrupt priorities by one level using the kconfig settings:
+// - CONFIG_BT_CTLR_LLL_PRIO 1
+// - CONFIG_BT_CTLR_ULL_HIGH_PRIO 2
+// - CONFIG_BT_CTLR_ULL_LOW_PRIOCONFIG 2
+//
+// These config options are enabled automatically by the PS2 UART and GPIO
+// drivers... so you don't have to enable them manually.
+//
+// Then we lower the interrupt priority of all other devices by 2 levels using
+// the devicetree config below.
+//
+// This allows the PS/2 interrupts to be triggered faster and reduces
+// transmission errors.
+//
+// If you are using the nice_nano_v2 board, you can reuse my config below.
+//
+// Otherwise, you can generate the interrupt overrides using this script:
+// https://github.com/infused-kim/kb_zmk_ps2_mouse_trackpoint_driver/blob/main/scripts/gen_interrupt_priority_overrides.py
+//
+// Make sure to do it on a zephyr.dts where the interrupts have not been
+// adjusted yet (i.e. a config that doesn't have the the following options
+// enabled).
+//
+// If you are building using a toolchain you can find the zephyr.dts in the
+// build directory, which by default is: `app/build/zephyr/zephyr.dts`
+//
+// If you are building using the github actions, copy the output of the build
+// step `xxxx_right - nice_nano_v2 Devicetree file` into a file and run the
+// script on it.
 
 // gpiote should have the highest interrupt priority (0)
 &gpiote {
@@ -231,6 +300,93 @@
     interrupts = < 42 3 >;
 };
 
+/ {
+    mouse_ps2: mouse_ps2 {
+		status = "disabled";
+        compatible = "zmk,input-mouse-ps2";
+
+#ifdef MOUSE_PS2_DRIVER_UART
+	    ps2-device = <&uart_ps2>;
+#else
+	    ps2-device = <&gpio_ps2>;
+#endif
+
+#ifdef MOUSE_PS2_PIN_RST_PRO_MICRO
+        rst-gpios = MOUSE_PS2_PIN_RST_PRO_MICRO;
+#endif
+    };
+
+    //mouse_ps2_input_listener: mouse_ps2_input_listener {
+    //    compatible = "zmk,input-listener";
+    //    status = "disabled";
+//
+    //    device = <&mouse_ps2>;
+    //};
+};
+&uart0 {
+    status = "disabled";
+    compatible = "nordic,nrf-uarte";
+    current-speed = MOUSE_PS2_UART_BAUD_RATE;
+    pinctrl-0 = <&uart0_ps2_default>;
+    pinctrl-1 = <&uart0_ps2_off>;
+    pinctrl-names = "default", "sleep";
+    uart_ps2: uart_ps2 {
+        status="disabled";
+        compatible = "uart-ps2";
+        scl-gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO;
+        sda-gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO;
+    };
+};
+
+&pro_micro_i2c {
+    status = "okay";
+
+    oled: ssd1306@3c {
+        compatible = "solomon,ssd1306fb";
+        reg = <0x3c>;
+        width = <128>;
+        height = <32>;
+        segment-offset = <0>;
+        page-offset = <0>;
+        display-offset = <0>;
+        multiplex-ratio = <31>;
+        segment-remap;
+        com-invdir;
+        com-sequential;
+        inversion-on;
+        prechargep = <0x22>;
+    };
+};
+
+//&mouse_ps2_input_listener {
+//};
+
+&mouse_ps2 {
+};
+
+&mouse_ps2 {
+    status = "okay";
+		disable-clicking;
+		tp-sensitivity = <128>;
+		tp-x-invert;
+		tp-y-invert;
+		sampling-rate = <80>;
+};
+
+//&mouse_ps2_input_listener {
+//  status = "okay";
+//};
+
+&uart0 {
+  status = "okay";
+};
+
+&uart_ps2 {
+  status="okay";
+};
+
+#define MOUSE_PS2_DT_PRESENT
+
 &pinctrl {
 	// This pinctrl state is used for receiving
 	// For `UART_TX`, set an unused and unexposed pin
@@ -265,53 +421,4 @@
 					MOUSE_PS2_PIN_UNEXPOSED_RX;
 		};
 	};
-};
-
-#define MOUSE_PS2_DT_PRESENT
-
-&uart0 {
-    status = "disabled";
-    compatible = "nordic,nrf-uarte";
-
-    current-speed = MOUSE_PS2_UART_BAUD_RATE;
-    pinctrl-0 = <&uart0_ps2_default>;
-    pinctrl-1 = <&uart0_ps2_off>;
-
-    pinctrl-names = "default", "sleep";
-
-    uart_ps2: uart_ps2 {
-        status="disabled";
-        compatible = "uart-ps2";
-        scl-gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO;
-        sda-gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO;
-    };
-};
-
-
-/ {
-    mouse_ps2: mouse_ps2 {
-		status = "disabled";
-        compatible = "zmk,input-mouse-ps2";
-	    ps2-device = <&uart_ps2>;
-
-#ifdef MOUSE_PS2_PIN_RST_PRO_MICRO
-        rst-gpios = MOUSE_PS2_PIN_RST_PRO_MICRO;
-#endif
-    };
-};
-
-&uart0 {
-    status = "okay";
-};
-&uart_ps2 {
-    status = "okay";
-};
-
-&mouse_ps2 {
-    status = "okay";
-		disable-clicking;
-		tp-sensitivity = <128>;
-		tp-x-invert;
-		tp-y-invert;
-		sampling-rate = <80>;
 };
