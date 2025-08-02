@@ -64,5 +64,4 @@
   //
   // Then you can add those values to `&mouse_ps2`
   #define U_MSS_LOG     &mms MS_LOG
-
 #endif  // HAS_MOUSE_TP
