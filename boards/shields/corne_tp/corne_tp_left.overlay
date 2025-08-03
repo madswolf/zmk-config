@@ -4,7 +4,12 @@
  * SPDX-License-Identifier: MIT
  */
 
+#include "split_inputs.dtsi"
 #include "corne_tp.dtsi"
+
+&trackpoint_listener {
+    status = "okay";
+};
 
 &kscan0 {
     col-gpios
