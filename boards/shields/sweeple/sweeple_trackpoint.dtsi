@@ -1,234 +1,424 @@
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 #include <dt-bindings/zmk/matrix_transform.h>
 
 / {
-
     chosen {
         zmk,kscan = &kscan0;
-        zmk,matrix_transform = &default_transform;
+        zmk,matrix-transform = &default_transform;
     };
 
     default_transform: keymap_transform_0 {
         compatible = "zmk,matrix-transform";
-        columns = <34>;
-        rows = <1>;
+        columns = <10>;
+        rows = <4>;
         map = <
-        RC(0,0)  RC(0,1)  RC(0,2)  RC(0,3)  RC(0,4)    RC(0,21) RC(0,20) RC(0,19) RC(0,18) RC(0,17)
-        RC(0,5)  RC(0,6)  RC(0,7)  RC(0,8)  RC(0,9)    RC(0,26) RC(0,25) RC(0,24) RC(0,23) RC(0,22)
-        RC(0,10) RC(0,11) RC(0,12) RC(0,13) RC(0,14)   RC(0,31) RC(0,30) RC(0,29) RC(0,28) RC(0,27)
-                                   RC(0,15) RC(0,16)   RC(0,33) RC(0,32)
+RC(0,2) RC(0,3) RC(0,4) RC(0,5)  RC(0,6) RC(0,7) RC(0,8) RC(0,9)
+RC(1,2) RC(1,3) RC(1,4) RC(1,5)  RC(1,6) RC(1,7) RC(1,8) RC(1,9)
+RC(2,2) RC(2,3) RC(2,4) RC(2,5)  RC(2,6) RC(2,7) RC(2,8) RC(2,9)
+                RC(3,4) RC(3,5)  RC(3,6) RC(3,7)
         >;
     };
 
     kscan0: kscan {
-        compatible = "zmk,kscan-gpio-direct";
-        input-gpios
-        = <&pro_micro  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro 18 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro 19 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro 20 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro 21 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro  1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro  6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        , <&pro_micro  8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-        ;
+        compatible = "zmk,kscan-gpio-matrix";
+        wakeup-source;
+
+        diode-direction = "col2row";
+        row-gpios
+            = <&pro_micro 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&pro_micro 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&pro_micro 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&pro_micro 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            ;
+
+    };
+
+    // TODO: per-key RGB node(s)?
+};
+
+/*
+ * PS/2 Mouse / Trackpoint - User Configuration
+ *
+ * Enable PS/2 drivers on this side of the keyboard.
+ * It MUST be the central half. If you connected your TP or mouse to the
+ * left side, then move the following content to `your_keyboard_left.overlay`
+ *
+ * You also need to adjust `Kconfig.defconfig` and configure that this side
+ * is the central side.
+ *
+ */
+
+#define MOUSE_PS2_DRIVER_UART
+
+#define MOUSE_PS2_PIN_SCL_PRO_MICRO <&pro_micro 16 GPIO_ACTIVE_HIGH>
+#define MOUSE_PS2_PIN_SDA_PRO_MICRO <&pro_micro 10 GPIO_ACTIVE_HIGH>
+#define MOUSE_PS2_PIN_RST_PRO_MICRO <&pro_micro 9 GPIO_ACTIVE_HIGH>
+#define MOUSE_PS2_PIN_SDA_PINCTRL <NRF_PSEL(UART_RX, 0, 9)>
+#define MOUSE_PS2_UART_BAUD_RATE <14400>
+
+/*
+ * PS/2 Mouse / Trackpoint - User Configuration if NOT using nice!nano
+ *
+ * WARNING: Do NOT change this if you are using a nice!nano v2 or clone.
+ */
+
+// Unexposed UART pins
+// In UART two different pins are used for receiving and transmitting, but PS/2
+// uses the same pin for both.
+//
+// The UART config still requires both pins to be configured. So we use one of
+// the nrf52 pins that are not exposed on the nice!nano board.
+//
+// Do NOT change these if you are using a nice!nano (or a clone of it)
+#define MOUSE_PS2_PIN_UNEXPOSED_TX <NRF_PSEL(UART_TX, 0, 27)>
+#define MOUSE_PS2_PIN_UNEXPOSED_RX <NRF_PSEL(UART_RX, 0, 28)>
+
+
+// Adjust GPIO interrupt priority to the highest level.
+//
+// IMPORTANT TLDR:
+// If you are using the nice_nano_v2 board, you don't need to make changes to
+// the config below and can leave it as it is.
+//
+// Explanation of these settings:
+//
+// PS/2 events must be processed within 30-50us, but frequently bluetooth and
+// other interrupts take longer to finish.
+//
+// Therefore we change the default GPIO priority to the highest level (0) and
+// demote all BT interrupt priorities by one level using the kconfig settings:
+// - CONFIG_BT_CTLR_LLL_PRIO 1
+// - CONFIG_BT_CTLR_ULL_HIGH_PRIO 2
+// - CONFIG_BT_CTLR_ULL_LOW_PRIOCONFIG 2
+//
+// These config options are enabled automatically by the PS2 UART and GPIO
+// drivers... so you don't have to enable them manually.
+//
+// Then we lower the interrupt priority of all other devices by 2 levels using
+// the devicetree config below.
+//
+// This allows the PS/2 interrupts to be triggered faster and reduces
+// transmission errors.
+//
+// If you are using the nice_nano_v2 board, you can reuse my config below.
+//
+// Otherwise, you can generate the interrupt overrides using this script:
+// https://github.com/infused-kim/kb_zmk_ps2_mouse_trackpoint_driver/blob/main/scripts/gen_interrupt_priority_overrides.py
+//
+// Make sure to do it on a zephyr.dts where the interrupts have not been
+// adjusted yet (i.e. a config that doesn't have the the following options
+// enabled).
+//
+// If you are building using a toolchain you can find the zephyr.dts in the
+// build directory, which by default is: `app/build/zephyr/zephyr.dts`
+//
+// If you are building using the github actions, copy the output of the build
+// step `xxxx_right - nice_nano_v2 Devicetree file` into a file and run the
+// script on it.
+
+// gpiote should have the highest interrupt priority (0)
+&gpiote {
+    interrupts = < 6 0 >;
+};
+
+// All other priorities should be two levels lower than their defaults
+// (which is usually 1 and should be demoted to 3)
+&clock {
+    interrupts = < 0 3 >;
+};
+
+&power {
+    interrupts = < 0 3 >;
+};
+
+&radio {
+    interrupts = < 1 3 >;
+};
+
+&uart0 {
+    interrupts = < 2 3 >;
+};
+
+&i2c0 {
+    interrupts = < 3 3 >;
+};
+
+&spi0 {
+    interrupts = < 3 3 >;
+};
+
+&i2c1 {
+    interrupts = < 4 3 >;
+};
+
+&spi1 {
+    interrupts = < 4 3 >;
+};
+
+&nfct {
+    interrupts = < 5 3 >;
+};
+
+&adc {
+    interrupts = < 7 3 >;
+};
+
+&timer0 {
+    interrupts = < 8 3 >;
+};
+
+&timer1 {
+    interrupts = < 9 3 >;
+};
+
+&timer2 {
+    interrupts = < 10 3 >;
+};
+
+&rtc0 {
+    interrupts = < 11 3 >;
+};
+
+&temp {
+    interrupts = < 12 3 >;
+};
+
+&rng {
+    interrupts = < 13 3 >;
+};
+
+&ecb {
+    interrupts = < 14 3 >;
+};
+
+&ccm {
+    interrupts = < 15 3 >;
+};
+
+&wdt {
+    interrupts = < 16 3 >;
+};
+
+&rtc1 {
+    interrupts = < 17 3 >;
+};
+
+&qdec {
+    interrupts = < 18 3 >;
+};
+
+&comp {
+    interrupts = < 19 3 >;
+};
+
+&egu0 {
+    interrupts = < 20 3 >;
+};
+
+&egu1 {
+    interrupts = < 21 3 >;
+};
+
+&egu2 {
+    interrupts = < 22 3 >;
+};
+
+&egu3 {
+    interrupts = < 23 3 >;
+};
+
+&egu4 {
+    interrupts = < 24 3 >;
+};
+
+&egu5 {
+    interrupts = < 25 3 >;
+};
+
+&timer3 {
+    interrupts = < 26 3 >;
+};
+
+&timer4 {
+    interrupts = < 27 3 >;
+};
+
+&pwm0 {
+    interrupts = < 28 3 >;
+};
+
+&pdm0 {
+    interrupts = < 29 3 >;
+};
+
+&pwm1 {
+    interrupts = < 33 3 >;
+};
+
+&pwm2 {
+    interrupts = < 34 3 >;
+};
+
+&spi2 {
+    interrupts = < 35 3 >;
+};
+
+&rtc2 {
+    interrupts = < 36 3 >;
+};
+
+&i2s0 {
+    interrupts = < 37 3 >;
+};
+
+&usbd {
+    interrupts = < 39 3 >;
+};
+
+&uart1 {
+    interrupts = < 40 3 >;
+};
+
+&qspi {
+    interrupts = < 41 3 >;
+};
+
+&pwm3 {
+    interrupts = < 45 3 >;
+};
+
+&spi3 {
+    interrupts = < 47 3 >;
+};
+
+&cryptocell {
+    interrupts = < 42 3 >;
+};
+
+/ {
+    mouse_ps2: mouse_ps2 {
+		status = "disabled";
+        compatible = "zmk,input-mouse-ps2";
+
+#ifdef MOUSE_PS2_DRIVER_UART
+	    ps2-device = <&uart_ps2>;
+#else
+	    ps2-device = <&gpio_ps2>;
+#endif
+
+#ifdef MOUSE_PS2_PIN_RST_PRO_MICRO
+        rst-gpios = MOUSE_PS2_PIN_RST_PRO_MICRO;
+#endif
+    };
+
+    mouse_ps2_input_listener: mouse_ps2_input_listener {
+        compatible = "zmk,input-listener";
+        status = "disabled";
+
+        device = <&mouse_ps2>;
+    };
+};
+&uart0 {
+    status = "disabled";
+    compatible = "nordic,nrf-uarte";
+    current-speed = MOUSE_PS2_UART_BAUD_RATE;
+    pinctrl-0 = <&uart0_ps2_default>;
+    pinctrl-1 = <&uart0_ps2_off>;
+    pinctrl-names = "default", "sleep";
+    uart_ps2: uart_ps2 {
+        status="disabled";
+        compatible = "uart-ps2";
+        scl-gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO;
+        sda-gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO;
     };
 };
 
-
-/*
- * Key Behaviors to adjust settings
- */
-
-// They key codes below can be used to adjust the TP settings at runtime
-// without needing to recompile the firmware.
-//
-// The values will be logged and saved in the config on the controller flash
-// after 60s (CONFIG_ZMK_SETTINGS_SAVE_DEBOUNCE).
-//
-// On boot the settings will be restored again.
-//
-// If you prefer a more explicit way of configuration, you can also hardcode
-// these settings in `&mouse_ps2`.
-//
-// If you set these settings in `&mouse_ps2`, you will still be able to
-// adjust the values during runtime with these key codes, but after
-// restarting the board the values in `&mouse_ps2` will be restored and not
-// the ones stored in the flash using the key codes.
-
-
-// How sensitive the trackpoint is
-#define U_MSS_TP_S_I &mms MS_TP_SENSITIVITY_INCR
-#define U_MSS_TP_S_D &mms MS_TP_SENSITIVITY_DECR
-
-
-// The maximum speed the trackpoint will accelerate to
-#define U_MSS_TP_V6_I &mms MS_TP_VALUE6_INCR
-#define U_MSS_TP_V6_D &mms MS_TP_VALUE6_DECR
-
-
-// I am not quite sure tbh... default seems fine.
-#define U_MSS_TP_NI_I &mms MS_TP_NEG_INERTIA_INCR
-#define U_MSS_TP_NI_D &mms MS_TP_NEG_INERTIA_DECR
-
-
-// How hard you have to press to activate the "Press To Select" feature that
-// lets you tap or press on the trackpoint to click.
-//
-// Not all trackpoints support it and you have to enable
-// `tp-press-to-select;` in `&mouse_ps2` first.
-#define U_MSS_TP_PT_I &mms MS_TP_PTS_THRESHOLD_INCR
-#define U_MSS_TP_PT_D &mms MS_TP_PTS_THRESHOLD_DECR
-
-
-// If you mess up the settings, you can use this key code to clear the
-// settings from flash and re-set the default values on the TP.
-//
-// Make sure to wait at least CONFIG_ZMK_SETTINGS_SAVE_DEBOUNCE seconds (60
-// by default) before restarting the board to ensure the settings are
-// written to flash storage.
-#define U_MSS_RESET   &mms MS_RESET
-
-
-// If you prefer to set the settings in `&mouse_ps2`, you can use the key
-// codes above to find the settings you like the most and then press this
-// key code to output the settings to the log.
-//
-// Then you can add those values to `&mouse_ps2`
-#define U_MSS_LOG     &mms MS_LOG
-
-
-// Only apply these settings on the side that has the TP connected
-// (usually the right side)
-#ifdef MOUSE_PS2_DT_PRESENT
-
- /*
-  * Input Listener Config
-  */
-
-  &mouse_ps2_input_listener {
-
-    // Adjust pointing device axes.
-    // This adjusts the values inside the zmk driver. Some
-    // trackpoints also allow you to adjust it in their firmware. Check
-    // the driver options below for more info.
-    // xy-swap;
-    // x-invert;
-    // y-invert;
-
-    // Set the layer that should automatically activate when the mouse is
-    // moving.
-    //layer-toggle = <MOUSE_TP>;
-
-    // How long the mouse needs to move for before the layer is activated (to
-    // avoid accidental activations while typing) (Default: 250)
-    //layer-toggle-delay-ms = <250>;
-
-    // How long to wait, after the last mouse movement, before deactivating
-    // the layer (Default: 250)
-    //layer-toggle-timeout-ms = <250>;
-  };
-
-
- /*
-  * Mouse Driver Settings
-  */
-
-  &mouse_ps2 {
-
-    // How sensitive the TP is (Default: 128)
-    // tp-sensitivity = <128>;
-
-
-    // The maximum mouse movement speed the TP will accelarate to
-    // (Default: 97)
-    // tp-val6-upper-speed = <97>;
-
-
-    // Negative Inertia (Default: 6)
-    // Makes the TP feel more responsive and "overshoot" less.
-    // tp-neg-inertia = <6>;
-
-
-    // Enable clicking by tapping on the TP.
-    // Not all TPs support this.
-    // tp-press-to-select;
-    // tp-press-to-select-threshold = <10>;
-
-
-    // Adjust axis settings on the TP
-    // Works only on some trackpoints, but may be properly considered by the
-    // trackpoint's acceleration features (which may or may not have an
-    // impact).
-    //
-    // Alternatively consider achieving the same effect using the
-    //  `input-listener` settings below.
-    // tp-xy-swap;
-    // tp-x-invert;
-    // tp-y-invert;
-
-
-    // Set sampling rate
-    //
-    // The frequency at which the mouse samples and sends data (in hz).
-    // The default rate is 100. You can try lowering it if you experience
-    // connection errors.
-    //
-    // Higher values than 100 are no improvement in my experience, but will
-    // increase battery life and potentially errors in transmissions.
-    //
-    // These values are allowed: 10,20,40,60,80,100,200
-    // sampling-rate = <60>;
-
-
-    // Disables clicking.
-    // Useful when using the PS2 GPIO driver that is prone to
-    // erros in transmissions to reduce accidental clicks.
-    // disable-clicking;
-
-
-    // Enable scroll wheel
-    // For mouse devices supporting the Intellimouse extension. Not relevant
-    // for trackpoints
-    // scroll-mode;
-
-  };
-
-  // Enable PS/2 Mouse Devices
-  // In `your_keyboard_right.overlay` all devices have `status = "disabled"`.
-  // So,they are never compiled into the firmware.
-  //
-  // Here we enable them, but we do it within the #ifdef HAS_MOUSE_TP code
-  // block, which prevents compilation and potential build errors when we
-  // undefine HAS_MOUSE_TP in corne_tp.keymap
-  &mouse_ps2  {
+&pro_micro_i2c {
     status = "okay";
-  };
 
-  &mouse_ps2_input_listener {
+    oled: ssd1306@3c {
+        compatible = "solomon,ssd1306fb";
+        reg = <0x3c>;
+        width = <128>;
+        height = <32>;
+        segment-offset = <0>;
+        page-offset = <0>;
+        display-offset = <0>;
+        multiplex-ratio = <31>;
+        segment-remap;
+        com-invdir;
+        com-sequential;
+        inversion-on;
+        prechargep = <0x22>;
+    };
+};
+
+&mouse_ps2_input_listener {
+};
+
+&mouse_ps2 {
+};
+
+&mouse_ps2 {
     status = "okay";
-  };
+		disable-clicking;
+		tp-sensitivity = <128>;
+		tp-x-invert;
+		tp-y-invert;
+		sampling-rate = <80>;
+};
 
-  #ifdef MOUSE_PS2_DRIVER_UART
+&mouse_ps2_input_listener {
+  status = "okay";
+};
 
-    &uart0 {
-      status = "okay";
-    };
+&uart0 {
+  status = "okay";
+};
 
-    &uart_ps2 {
-      status="okay";
-    };
+&uart_ps2 {
+  status="okay";
+};
 
-  #else
+#define MOUSE_PS2_DT_PRESENT
 
-    &gpio_ps2  {
-      status = "okay";
-    };
+&pinctrl {
+	// This pinctrl state is used for receiving
+	// For `UART_TX`, set an unused and unexposed pin
+	// For `UART_RX`, set the PS/2 SDA pin number
+	uart0_ps2_default: uart0_ps2_default {
+		group1 {
+			psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
+					MOUSE_PS2_PIN_SDA_PINCTRL;
+		};
+	};
 
-  #endif  // MOUSE_PS2_DRIVER_UART
-#endif  // MOUSE_PS2_DT_PRESENT
+	// Set this to the same pins as uart0_ps2_default
+	uart0_ps2_sleep: uart0_ps2_sleep {
+		group1 {
+			psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
+					MOUSE_PS2_PIN_SDA_PINCTRL;
+			low-power-enable;
+		};
+	};
+
+	// The nrf52 UART controller is not compatible with the PS/2
+	// transmission frame. So the PS/2 UART driver doesn't use UART for
+	// transmissions and instead use GPIO bit-banging.
+	//
+	// When the driver switches to transmit mode, it frees up the SDA pin by
+    // switching the UART controller to unexposed/unused pins.
+	//
+	// Then it configures the GPIO controller to use the SCL and SDA pins
+	uart0_ps2_off: uart0_ps2_off {
+		group1 {
+			psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
+					MOUSE_PS2_PIN_UNEXPOSED_RX;
+		};
+	};
+};

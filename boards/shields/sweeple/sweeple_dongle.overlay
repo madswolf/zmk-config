@@ -4,4 +4,9 @@
  * SPDX-License-Identifier: MIT
  */
 
+#include "split_inputs.dtsi"
 #include "sweeple.dtsi"
+
+&trackpoint_listener {
+    status = "okay";
+};
