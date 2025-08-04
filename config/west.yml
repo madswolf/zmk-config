@@ -57,7 +57,9 @@ manifest:
     #
     # Additional zmk modules
     #
-
+    - name: zmk-split-peripheral-bonding-tweak
+      remote: badjeff
+      revision: main
     # Module for PS/2 mouse & TP driver
     - name: kb_zmk_ps2_mouse_trackpoint_driver
       remote: badjeff
