@@ -6,6 +6,8 @@ manifest:
       url-base: https://github.com/infused-kim
     - name: petejohanson
       url-base: https://github.com/petejohanson
+    - name: madswolf
+      url-base: https://github.com/madswolf
     - name: urob
       url-base: https://github.com/urob
 
@@ -59,7 +61,7 @@ manifest:
 
     # Module for PS/2 mouse & TP driver
     - name: kb_zmk_ps2_mouse_trackpoint_driver
-      remote: infused-kim
+      remote: madswolf
       revision: main
 
   self:
