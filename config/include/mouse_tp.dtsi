@@ -1,4 +1,4 @@
-#ifdef HAS_MOUSE_TP
+/ {
   #include <dt-bindings/zmk/mouse.h>
   #include <dt-bindings/zmk/mouse_settings.h>
   #include <behaviors/mouse_keys.dtsi>
@@ -24,7 +24,6 @@
   #define U_MSS_TP_PT_I &mms MS_TP_PTS_THRESHOLD_INCR
   #define U_MSS_TP_PT_D &mms MS_TP_PTS_THRESHOLD_DECR
 
-
   // If you mess up the settings, you can use this key code to clear the
   // settings from flash and re-set the default values on the TP.
   //
@@ -33,11 +32,10 @@
   // written to flash storage.
   #define U_MSS_RESET   &mms MS_RESET
 
-
   // If you prefer to set the settings in `&mouse_ps2`, you can use the key
   // codes above to find the settings you like the most and then press this
   // key code to output the settings to the log.
   //
   // Then you can add those values to `&mouse_ps2`
   #define U_MSS_LOG     &mms MS_LOG
-#endif  // HAS_MOUSE_TP
+};
