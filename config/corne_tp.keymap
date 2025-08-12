@@ -60,9 +60,7 @@
   #define U_TOG_TP_SET &none
 #endif  // HAS_MOUSE_TP
 
-// Disable line-wrap in your editor to see a "visualization" of the key layouts
 / {
-
     behaviors {
         morph_curlybracket: morph_curlybracket {
             compatible = "zmk,behavior-mod-morph";
@@ -94,6 +92,19 @@
             bindings = <&kp FSLH>, <&kp LS(FSLH)>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
+        morph_equals_plus: morph_equals_plus {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp RPAR>, <&kp MINUS>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        morph_slash_backslash: morph_slash_backslash {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp AMPS>, <&kp RA(NUBS)>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
         
         morph_and_or: morph_and_or {
             compatible = "zmk,behavior-mod-morph";
@@ -117,6 +128,45 @@
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp UNDER>, <&kp LS(EXCL)>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+        morph_asterisk_percent: morph_asterisk_percent {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp PIPE>, <&kp PRCNT>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        morph_doublequote_singlequote: morph_doublequote_singlequote {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LS(N2)>, <&kp BSLH>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+        morph_at_pound: morph_at_pound {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp RA(N2)>, <&kp LS(N3)>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+        morph_dollar_euro: morph_dollar_euro {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp RA(N4)>, <&kp LC(LA(E))>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        morph_tilde_caret: morph_tilde_caret {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp RA(RBKT)>, <&kp RBRC>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        morph_backtick_accent: morph_backtick_accent {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp PLUS>, <&kp EQUAL>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
         
@@ -212,7 +262,19 @@
             layers = <0 4>;
             bindings = <&morph_minus_under>; 
         };
-
+        combo_equals_plus {
+            timeout-ms = <30>;
+            key-positions = <26 17>; 
+            layers = <0 4>;
+            bindings = <&morph_equals_plus>; 
+        };
+        
+        combo_slash_backslash {
+            timeout-ms = <30>;
+            key-positions = <7 18>; 
+            layers = <0 4>;
+            bindings = <&morph_slash_backslash>; 
+        };
 
         combo_and_or {
             timeout-ms = <30>;
@@ -238,6 +300,31 @@
             layers = <0 4>;
             bindings = <&morph_qmark_emark>; 
         };
+        combo_asterisk_percent {
+            timeout-ms = <30>;
+            key-positions = <12 23>; 
+            layers = <0 4>;
+            bindings = <&morph_asterisk_percent>; 
+        };
+
+        combo_doublequote_singlequote {
+            timeout-ms = <30>;
+            key-positions = <11 12>; 
+            layers = <0 4>;
+            bindings = <&morph_doublequote_singlequote>; 
+        };
+        combo_at_pound {
+            timeout-ms = <30>;
+            key-positions = <11 2>; 
+            layers = <0 4>;
+            bindings = <&morph_at_pound>; 
+        };
+        combo_dollar_euro {
+            timeout-ms = <30>;
+            key-positions = <21 12>; 
+            layers = <0 4>;
+            bindings = <&morph_dollar_euro>; 
+        };
         
         
         combo_esc {
@@ -259,8 +346,21 @@
             layers = <0>;
             bindings = <&kp LC(C)>; 
         };
-    };
 
+        combo_tilde_caret {
+            timeout-ms = <30>;
+            key-positions = <18 19>;
+            layers = <0>;
+            bindings = <&morph_tilde_caret>; 
+        };
+        combo_backtick_accent {
+            timeout-ms = <30>;
+            key-positions = <10 11>; 
+            layers = <0>;
+            bindings = <&morph_backtick_accent>; 
+        };
+    };
+    
     keymap {
         compatible = "zmk,keymap";
         default_layer {
@@ -281,13 +381,13 @@
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│          │  $       │  @       │  =       │ |        │   │          │  <       │  ?       │  +       │          │
-            &trans     &kp RA(N4) &kp RA(N2) &kp RPAR   &trans        &trans     &trans     &trans     &kp MINUS  &trans
+            &trans     &trans     &trans     &trans     &trans        &trans     &trans     &trans     &trans      &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  `       │  '       │  "       │  :       │  %       │   │  (       │  -       │  &       │  /       │  *       │
-            &kp PLUS   &kp BSLH  &kp LS(N2) &trans     &kp PRCNT      &trans     &trans     &trans     &kp AMPS   &kp PIPE
+            &trans     &trans     &trans     &trans     &trans        &trans     &trans     &trans     &trans      &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │  #       │  .       │          │   │          │  {       │  [       │  ~       │          │
-            &trans     &trans     &kp LS(N3) &trans    &trans         &trans     &trans     &trans     &kp RA(RBKT) &trans
+            &trans     &trans     &trans    &trans    &trans         &trans     &trans     &trans     &trans       &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                             &trans      &trans         &sl 2      &sl 2
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
@@ -298,13 +398,13 @@
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│          │  €       │          │          │          │   │          │  >       │  !       │          │          │
-            &trans     &kp LC(LA(E)) &trans  &trans    &trans         &trans     &trans     &trans     &trans     &kp LC(PSCRN)
+            &trans     &trans     &trans     &trans    &trans         &trans     &trans     &trans     &trans     &kp LC(PSCRN)
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  ´       │          │  '       │  ;       │          │   │  )       │  _       │  |       │ \        │          │
-            &kp EQUAL  &trans     &kp BSLH   &trans    &trans         &trans     &trans     &trans     &kp RA(NUBS) &kp LS(PSCRN)
+            &trans     &trans     &trans     &trans    &trans         &trans     &trans     &trans     &trans     &kp LS(PSCRN)
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │  ,       │          │   │          │  }       │  ]       │  ^       │          │
-            &to 4      &kp Z      &trans     &trans    &trans         &trans     &trans     &trans     &kp RBRC   &kp LC(LS(PSCRN))
+            &to 4      &kp Z      &trans     &trans    &trans         &trans     &trans     &trans     &trans     &kp LC(LS(PSCRN))
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
@@ -376,13 +476,10 @@
             >;
         };
 
-                #ifdef HAS_MOUSE_TP
         
-            // Automatically activated when the mouse or trackpoint moves.
-            // Configured in `include/mouse_tp.dtsi`.
-            MouseTP_layer {
-              display-name = "TP";
-              bindings = <
+        MouseTP_layer {
+            display-name = "TP";
+            bindings = <
         // ╭────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────╮    ╭────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────╮
              U_TOG_TP_SET             U_TOG_TP_SET             &trans                   &trans                   &msc SCRL_UP             &trans                        &trans                   &trans                   &trans                   &trans                   U_TOG_TP_SET              U_TOG_TP_SET
         // ├────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┤    ├────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┤
@@ -395,10 +492,10 @@
               >;
             };
         
-            // You can find the defines for the actual key press behaviors in `include/mouse_tp.dtsi`.
-            MouseSettings_layer {
-              display-name = "TP Set";
-              bindings = <
+        // You can find the defines for the actual key press behaviors in `include/mouse_tp.dtsi`.
+        MouseSettings_layer {
+            display-name = "TP Set";
+            bindings = <
         // ╭────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────╮    ╭────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────╮
              U_TOG_TP_SET             U_TOG_TP_SET             &none                    U_MSS_TP_S_D             U_MSS_TP_S_I             U_MSS_TP_PT_I                 U_MSS_TP_PT_I            U_MSS_TP_S_D             U_MSS_TP_S_I             &none                    U_TOG_TP_SET              U_TOG_TP_SET
         // ├────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┤    ├────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┤
@@ -410,7 +507,5 @@
         //                                                                            ╰────────────────────────┴────────────────────────┴────────────────────────╯    ╰────────────────────────┴────────────────────────┴────────────────────────╯
               >;
             };
-        
-        #endif
     };
 };
