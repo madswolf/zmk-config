@@ -1,0 +1,27 @@
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include "split_inputs.dtsi"
+#include "corne_trackpoint.dtsi"
+
+&default_transform {
+    col-offset = <6>;
+};
+//#include <input/processors/report_rate_limit.dtsi>
+//#include <input/processors/xyz.dtsi>
+
+&trackpoint_split { device = <&mouse_ps2>; };
+//&trackpoint_split { device = <&mouse_ps2>; input-processors = <&zip_report_rate_limit 4>, <&zip_xyz>; };
+&kscan0 {
+    col-gpios
+        = <&pro_micro 14 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 15 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 18 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 19 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 20 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 21 GPIO_ACTIVE_HIGH>
+        ;
+};
