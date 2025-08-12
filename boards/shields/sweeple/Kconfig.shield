@@ -7,3 +7,5 @@ config SHIELD_SWEEPLE_RIGHT
 config SHIELD_SWEEPLE_DONGLE
 	def_bool $(shields_list_contains,sweeple_dongle)
 
+config SHIELD_SWEEPLE_TRACKPOINT
+    def_bool $(shields_list_contains,sweeple_trackpoint)

@@ -1,10 +1,16 @@
 ---
 include:
   - board: nice_nano_v2
-    shield: corne_tp_left
+    shield: sweeple_left
     snippet: zmk-usb-logging
   - board: nice_nano_v2
-    shield: corne_tp_right
+    shield: sweeple_right
+    snippet: zmk-usb-logging
+  - board: nice_nano_v2
+    shield: sweeple_dongle
+    snippet: zmk-usb-logging
+  - board: nice_nano_v2
+    shield: sweeple_trackpoint
     snippet: zmk-usb-logging
   - board: nice_nano_v2
     shield: settings_reset
