@@ -415,11 +415,11 @@
         //│          │ Continue │ Step over│ Step into│          │   │          │          │          │          │          │
             &trans     &kp F5     &kp F10    &kp F11    &trans         &trans     &kp LC(N1) &kp LC(N2) &kp LC(N3) &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│breakpoint│Fix       │ Rename   │ Goto def │ annotate │   │          │          │          │          │          │
+        //│Breakpoint│Fix       │ Rename   │ Goto def │ annotate │   │          │          │          │          │          │
             &kp F9    &kp LC(DOT) &kp F2     &kp F12  &kp LA(LC(LARW)) &kp LS(LC(W)) &kp LS(LC(TAB)) &kp LC(W) &kp LC(TAB) &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│          │          │          │References│          │   │          │          │          │          │          │
-            &trans     &kp LC(Z)  &trans     &kp LA(LS(F12)) &trans    &trans     &trans     &trans  &kp LS(LC(I)) &trans
+        //│Bookmark  │Comment   │Format    │References│          │   │          │          │          │          │          │
+            &kp F13   &kp LA(LS(A)) &kp LA(LS(f)) &kp LA(LS(F12))      &trans    &trans     &trans     &trans  &kp LS(LC(I)) &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &kp DEL
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
