@@ -1,13 +1,13 @@
 ---
 include:
-  - board: nice_nano//zmk
+  - board: nice_nano@2.0.0//zmk
     shield: sweeple_left
     snippet: zmk-usb-logging
-  - board: nice_nano//zmk
+  - board: nice_nano@2.0.0//zmk
     shield: sweeple_right
     snippet: zmk-usb-logging
-  - board: nice_nano//zmk
+  - board: nice_nano@2.0.0//zmk
     shield: sweeple_dongle
     snippet: zmk-usb-logging
-  - board: nice_nano//zmk
+  - board: nice_nano@2.0.0//zmk
     shield: settings_reset
